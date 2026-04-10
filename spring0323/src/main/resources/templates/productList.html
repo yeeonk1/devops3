@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 목록</title>
+</head>
+<body>
+<h1>상품 목록</h1>
+<table border="1">
+	<thead>
+		<tr>
+			<th>번호</th>
+			<th>이미지</th>
+			<th>상품명</th>
+			<th>가격</th>
+			<th>수량</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<tr th:each="product : ${list}" >
+			<td th:text="${product.num}"></td>
+			<td>
+				<img th:if="${product.storedFilePath}" th:src="@{${product.storedFilePath}}" style="width: 100px; height: 100px; object-fit:cover; border-radius: 5px;" alt="상품이미지">
+				<span th:unless="${product.storedFilePath}">N/A</span>
+			</td>
+			<td>
+				<a th:href="@{/product/detail(num=${product.num})}" th:text="${product.name}"></a>
+			</td>
+			<td th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"></td>
+			<td th:text="${product.amount}"></td>
+		</tr>
+		<tr th:if="${#lists.isEmpty(list)}">
+			<td colspan="5">등록된 상품이 없습니다.</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+<a th:href="@{/product/write}">상품 등록</a>
+</body>
+</html>
+
+

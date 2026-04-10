@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.cloud.mapper.ProductMapper">
+	<select id="productList" resultType="org.cloud.dto.ProductDTO">
+		<![CDATA[
+			SELECT 
+				num, name, price, amount, stored_file_path
+			FROM
+				product
+			ORDER BY num DESC;		
+		]]>
+	</select>
+	
+	<insert id="insertProduct" parameterType="org.cloud.dto.ProductDTO">
+		<![CDATA[
+			INSERT INTO product
+			(
+				name, price, amount, stored_file_path
+			)
+			VALUES
+			(
+				#{name}, #{price}, #{amount}, #{storedFilePath}
+			)
+		]]>
+	</insert>
+	
+	<select id="productDetail" parameterType="int" resultType="org.cloud.dto.ProductDTO">
+		<![CDATA[
+			SELECT 
+				num, name, price, amount, stored_file_path
+			FROM
+				product
+			WHERE num = #{num}	
+		]]>
+	</select>
+	
+	<update id="updateProduct" parameterType="org.cloud.dto.ProductDTO">
+		UPDATE product
+		<set>
+			<if test="name != null">
+				<![CDATA[ name = #{name}, ]]>
+			</if>
+			<if test="price != 0">
+				<![CDATA[ price = #{price}, ]]>
+			</if>
+			<if test="amount != 0">
+				<![CDATA[ amount = #{amount}, ]]>
+			</if>
+			<if test="storedFilePath != null">
+				<![CDATA[ stored_file_path = #{storedFilePath} ]]>
+			</if>
+		</set>
+		<where>
+			<![CDATA[ num = #{num} ]]>
+		</where>
+	</update>
+	
+	<delete id="deleteProduct" parameterType="int">
+		<![CDATA[
+			DELETE
+			FROM
+				product
+			WHERE 
+				num = #{num}	
+		]]>
+	</delete>
+</mapper>  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

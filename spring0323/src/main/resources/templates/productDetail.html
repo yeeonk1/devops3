@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 상세</title>
+</head>
+<body>
+<h2>상품 상세</h2>
+<form id="frm" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="num" th:value="${product.num}">
+	
+	<p>현재 이미지: <br>
+		<img th:if="${product.storedFilePath}" th:src="@{${product.storedFilePath}}" style="width: 100px; height: 100px; object-fit:cover; border-radius: 5px;" alt="상품이미지">
+		<span th:unless="${product.storedFilePath}">이미지 없음</span>
+	</p>
+	<p>이미지 교체 : <input type="file" name="file" accept="image/*"></p>
+	<p>상품명: <input type="text" name="name" th:value="${product.name}"></p>
+	<p>가격: <input type="text" name="price" th:value="${product.price}"></p>
+	<p>수량: <input type="text" name="amount" th:value="${product.amount}"></p>
+	<hr>
+	<button type="submit" th:formaction="@{/product/update}">수정</button>
+	<button type="submit" th:formaction="@{/product/delete}">삭제</button>
+</form>
+<br>
+<a th:href="@{/product/list}">목록으로</a>
+</body>
+</html>
+
+
+
+
